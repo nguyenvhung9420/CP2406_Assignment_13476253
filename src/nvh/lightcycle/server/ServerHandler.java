@@ -284,11 +284,14 @@ public class ServerHandler implements ActionListener {
 			for (Player p : game.players) {
 				if (p == null) continue;
 				colors += p.id + ":" + p.color + ";";
+
 			}
 			if (colors.length() == 0) return;
 			colors = colors.substring(0, colors.length() - 1);
 			respond("colors;" + colors, connection);
-			
+
+			//Debug:
+			System.out.println("The current color is " + colors);
 		}
 		
 	}

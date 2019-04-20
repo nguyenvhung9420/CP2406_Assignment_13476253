@@ -32,7 +32,8 @@ public class Board extends JPanel {
 		setBackground(Color.WHITE);
 		setPreferredSize(new Dimension(Game.WIDTH*DOTS, Game.HEIGHT*DOTS));
 		
-		// generate my color
+		// generate colors for elements on the game:
+		//TODO: Change everything below to color chooser in Java:
 		Random rnd = new Random();
 		float hue = rnd.nextFloat();
 		float sat = (rnd.nextInt(4000) + 3000) / 10000f;
