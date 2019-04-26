@@ -19,7 +19,7 @@ import nvh.lightcycle.Response;
 
 public class ServerHandler implements ActionListener {
 	
-	private LightcycleServer snakeServer;
+	private LightcycleServer lightcycleServer;
 	private Server server;
 	private Game game;
 	private ArrayList<Integer> deadIds = new ArrayList<>();
@@ -29,7 +29,7 @@ public class ServerHandler implements ActionListener {
 	
 
 	public ServerHandler(LightcycleServer lightcycleServer) {
-		this.snakeServer = lightcycleServer;
+		this.lightcycleServer = lightcycleServer;
 	}
 	
 	public void start() {
@@ -39,8 +39,8 @@ public class ServerHandler implements ActionListener {
 		try {
 			
 			server.bind(54000, 54001);
-			snakeServer.buttonStart.setEnabled(false);
-			snakeServer.buttonStop.setEnabled(true);
+			lightcycleServer.buttonStart.setEnabled(false);
+			lightcycleServer.buttonStop.setEnabled(true);
 			log("Server started");
 			
 			Kryo kryo = server.getKryo();
@@ -95,8 +95,8 @@ public class ServerHandler implements ActionListener {
 		
 		server.stop();
 		timer.stop();
-		snakeServer.buttonStart.setEnabled(true);
-		snakeServer.buttonStop.setEnabled(false);
+		lightcycleServer.buttonStart.setEnabled(true);
+		lightcycleServer.buttonStop.setEnabled(false);
 		log("Server stopped");
 
 	}
@@ -104,7 +104,7 @@ public class ServerHandler implements ActionListener {
 	private void log(String message) {
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        snakeServer.textLog.setText(snakeServer.textLog.getText() + sdf.format(new Date()) + " " + message + "\n");
+        lightcycleServer.textLog.setText(lightcycleServer.textLog.getText() + sdf.format(new Date()) + " " + message + "\n");
         
 	}
 	

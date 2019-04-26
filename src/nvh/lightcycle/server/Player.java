@@ -13,6 +13,7 @@ public class Player {
     public int steps = 1;
     public int step = 0;
     public String color;
+
     public ArrayList<Integer> segmentsX = new ArrayList<>();
     public ArrayList<Integer> segmentsY = new ArrayList<>();
 
@@ -23,10 +24,9 @@ public class Player {
         this.color = color;
 
         Random rand = new Random();
-        int n = rand.nextInt(50);
 
-        segmentsX.add(n);
-        segmentsY.add(n);
+        segmentsX.add(rand.nextInt(50));
+        segmentsY.add(rand.nextInt(50));
 
     }
 
@@ -51,10 +51,8 @@ public class Player {
 
         // move segments
         for (int i = segmentsX.size() - 1; i > 0; i--) {
-
             segmentsX.set(i, segmentsX.get(i - 1));
             segmentsY.set(i, segmentsY.get(i - 1));
-
         }
 
         // move head in direction
@@ -78,7 +76,6 @@ public class Player {
         }
 
         // add segment
-        //if (score >= segmentsX.size()) {
         if (true){
             segmentsX.add(lastX);
             segmentsY.add(lastY);

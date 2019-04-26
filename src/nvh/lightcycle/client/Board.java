@@ -17,7 +17,6 @@ public class Board extends JPanel {
 	
 	public static final int DOTS = 20;
 	public static final Color BGCOLOR = Color.decode("#424242");
-	public static final Color FRUITCOLOR = Color.decode("#FFEB3B");
 	public static final Color SOLIDCOLOR = Color.decode("#FFFFFF");
 
 	public int[][] field = new int[Game.WIDTH][Game.HEIGHT];
@@ -50,10 +49,7 @@ public class Board extends JPanel {
 		for (int x = 0; x < Game.WIDTH; x++) {
 			for (int y = 0; y < Game.HEIGHT; y++) {
 				
-				if (field[x][y] == 1) {				// fruit (1)
-					g.setColor(FRUITCOLOR);
-					
-				} else if (field[x][y] == -1) {		// border (-1)
+				 if (field[x][y] == -1) {		// border (-1)
 					g.setColor(SOLIDCOLOR);
 					
 				} else if (field[x][y] == id) {		// my segments (id)

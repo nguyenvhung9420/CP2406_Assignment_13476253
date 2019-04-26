@@ -6,17 +6,14 @@ import java.util.Random;
 
 public class Game {
 
-	public static final int WIDTH = 64;
-	public static final int HEIGHT = 36;
-	public static final int FRUITS = 0;
-	public static final int TICK = 300; //The speed of the light cycle
+	public static final int WIDTH = 32;
+	public static final int HEIGHT = 18;
+	public static final int TICK = 500; //The speed of the light cycle
 	
 	public int field[][] = new int[WIDTH][HEIGHT];
 	public ArrayList<Player> players = new ArrayList<>();
 	private Random rnd = new Random();
-	
-	public ArrayList<Integer> fruitsX = new ArrayList<>();
-	public ArrayList<Integer> fruitsY = new ArrayList<>();
+
 	public ArrayList<Integer> solidsX = new ArrayList<>();
 	public ArrayList<Integer> solidsY = new ArrayList<>();
 	
@@ -25,12 +22,6 @@ public class Game {
 	
 	
 	public Game() {
-
-		//Adding fruits for snake:
-		for (int i = 0; i < FRUITS; i++) {
-			fruitsX.add(rnd.nextInt(WIDTH));
-			fruitsY.add(rnd.nextInt(HEIGHT));
-		}	
 	}
 
 	public void update() {
@@ -38,7 +29,6 @@ public class Game {
 		move();
 		checkCollisions();
 		checkSolids();
-		checkFruits();
 		
 		updateField();
 	}
@@ -85,9 +75,7 @@ public class Game {
 							if (deadPlayersBecomeSolids) playerToSolids(p);
 							players.set(i, null);
 							continue outerLoop;
-							
 						}
-						
 					}
 					
 				} else if (p != q && q.segmentsX.contains(pX) && q.segmentsY.contains(pY)) {
@@ -115,11 +103,6 @@ public class Game {
 			for (int j = 0; j < solidsX.size(); j++) {
 				
 				if (p.segmentsX.get(0) == solidsX.get(j) && p.segmentsY.get(0) == solidsY.get(j)) {
-
-					int result = fruitsX.indexOf(solidsX.get(j));
-					if (result > -1 && fruitsY.get(result) == solidsY.get(j)) {
-						
-						// don't die when fruit overlaps solid
 						
 					} else {
 
@@ -135,33 +118,7 @@ public class Game {
 			}
 			
 		}
-		
-	}
-	
-	private void checkFruits() {
-		
-		for (Player p : players) {
-			if (p == null) continue;
-			
-			for (int i = 0; i < FRUITS; i++) {
-				
-				if (p.segmentsX.get(0) == fruitsX.get(i) && p.segmentsY.get(0) == fruitsY.get(i)) {
-					
-					fruitsX.set(i, rnd.nextInt(WIDTH));
-					fruitsY.set(i, rnd.nextInt(HEIGHT));
-					
-					p.score++;
-					p.updateScore = true;
 
-					System.out.println("An Diem");
-					
-				}
-				
-			}
-			
-		}
-		
-	}
 	
 	private void updateField() {
 		
@@ -178,11 +135,6 @@ public class Game {
 			}
 			
 			field[solidsX.get(i)][solidsY.get(i)] = -1;
-		}
-		
-		// fruits
-		for (int i = 0; i < FRUITS; i++) {
-			field[fruitsX.get(i)][fruitsY.get(i)] = 1;
 		}
 		
 		// players
