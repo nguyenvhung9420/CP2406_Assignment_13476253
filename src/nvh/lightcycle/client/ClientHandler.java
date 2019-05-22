@@ -42,13 +42,11 @@ public class ClientHandler implements KeyListener {
 			Kryo kryo = client.getKryo();
 			kryo.register(Request.class);
 			kryo.register(Response.class);
-			
 
-			
 			//In case want to input manually the IP host:
 			//TODO: take a look here:
-			//InetAddress address = client.discoverHost(54001, 5000);
-			InetAddress address = InetAddress.getByName(JOptionPane.showInputDialog("Enter server IP"));
+			InetAddress address = client.discoverHost(54001, 5000);
+			//InetAddress address = InetAddress.getByName(JOptionPane.showInputDialog("Enter server IP"));
 			
 			client.connect(5000, address, 54000, 54001);
 			

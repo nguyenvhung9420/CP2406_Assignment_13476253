@@ -25,8 +25,8 @@ public class Player {
 
         Random rand = new Random();
 
-        segmentsX.add(rand.nextInt(50));
-        segmentsY.add(rand.nextInt(50));
+        segmentsX.add(rand.nextInt(17));
+        segmentsY.add(rand.nextInt(17));
 
     }
 

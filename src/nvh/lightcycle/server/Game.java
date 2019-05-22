@@ -29,7 +29,6 @@ public class Game {
 		move();
 		checkCollisions();
 		checkSolids();
-		
 		updateField();
 	}
 	
@@ -47,13 +46,16 @@ public class Game {
 			Player p = players.get(i);
 			if (p == null) continue;
 			
-			// borders
+			/* check if the following criteria is satisfied, the player will be dead:
+			* - the size (x and y) of the player is bigger then W and H of the game screen.
+			* - the segment of player is out of the game screen.
+			*  */
 			if (	Collections.max(p.segmentsX) >= WIDTH ||
 					Collections.max(p.segmentsY) >= HEIGHT ||
 					Collections.min(p.segmentsX) < 0 ||
 					Collections.min(p.segmentsY) < 0) {
 				
-				// dead
+				// make the player DEAD:
 				if (deadPlayersBecomeSolids) playerToSolids(p);
 				players.set(i, null);
 				continue;
