@@ -65,6 +65,7 @@ public class Game {
 			// other players
 			int pX = p.segmentsX.get(0);
 			int pY = p.segmentsY.get(0);
+			// set q to be the each other player other than p:
 			for (Player q : players) {
 				if (q == null) continue;
 				
@@ -73,16 +74,19 @@ public class Game {
 					for (int d = 1; d < q.segmentsX.size(); d++) {
 						if (q.segmentsX.get(d) == pX && q.segmentsY.get(d) == pY) {
 							
-							// dead
+							// make p dead:
+							System.out.println("checkSolids p == q to make p dead.");
 							if (deadPlayersBecomeSolids) playerToSolids(p);
 							players.set(i, null);
 							continue outerLoop;
 						}
 					}
-					
+
+				// in case player p hits itself:
 				} else if (p != q && q.segmentsX.contains(pX) && q.segmentsY.contains(pY)) {
 
-					// dead
+					// make p dead:
+					System.out.println("checkSolids p != q to make p dead.");
 					if (deadPlayersBecomeSolids) playerToSolids(p);
 					players.set(i, null);
 					continue outerLoop;
@@ -108,7 +112,8 @@ public class Game {
 						
 					} else {
 
-						// dead
+						// make p dead:
+						System.out.println("checkSolids to make p dead.");
 						if (deadPlayersBecomeSolids) playerToSolids(p);
 						players.set(i, null);
 						continue outerLoop;
