@@ -8,7 +8,7 @@ public class Game {
 
 	public static final int WIDTH = 32;
 	public static final int HEIGHT = 18;
-	public static final int TICK = 500; //The speed of the light cycle
+	public static final int TICK = 1000; //The speed of the light cycle
 	
 	public int field[][] = new int[WIDTH][HEIGHT];
 	public ArrayList<Player> players = new ArrayList<>();
@@ -65,10 +65,16 @@ public class Game {
 			// other players
 			int pX = p.segmentsX.get(0);
 			int pY = p.segmentsY.get(0);
+
+			boolean pX_equal_qX = false;
+			boolean pY_equal_qY = false;
+
+			int length_of_q = 0;
+
 			// set q to be the each other player other than p:
 			for (Player q : players) {
 				if (q == null) continue;
-				
+				// Check if the player hits ifself:
 				if (p == q) {
 					
 					for (int d = 1; d < q.segmentsX.size(); d++) {
@@ -82,14 +88,30 @@ public class Game {
 						}
 					}
 
-				// in case player p hits itself:
-				} else if (p != q && q.segmentsX.contains(pX) && q.segmentsY.contains(pY)) {
+				// in case player p hits another:
+				}
+				else if (q.segmentsX.contains(pX) && q.segmentsY.contains(pY)) {
+					length_of_q = q.segmentsX.size();
+					for (int d = 1; d < length_of_q; d++) {
+						pX_equal_qX = false;
+						pY_equal_qY = false;
+						if (q.segmentsX.get(d) == pX) {
+							pX_equal_qX = true;
+						}
+						if (q.segmentsY.get(d) == pY) {
+							pY_equal_qY = true;
+						}
+						if (pX_equal_qX && pY_equal_qY ){
+							System.out.println("q.segmentsY.get(d) == pY = " + q.segmentsY.get(d));
+							System.out.println("q.segmentsX.get(d) == pX = " + q.segmentsX.get(d));
+							System.out.println("checkSolids p != q to make p dead.");
+							if (deadPlayersBecomeSolids) playerToSolids(p);
+							players.set(i, null);
+							continue outerLoop;
+						}
+					}
 
-					// make p dead:
-					System.out.println("checkSolids p != q to make p dead.");
-					if (deadPlayersBecomeSolids) playerToSolids(p);
-					players.set(i, null);
-					continue outerLoop;
+
 					
 				}
 				
@@ -147,17 +169,15 @@ public class Game {
 		// players
 		for (Player p : players) {
 			if (p == null) continue;
-			
+
 			// segments
 			for (int i = 0; i < p.segmentsX.size(); i++) {
 				field[p.segmentsX.get(i)][p.segmentsY.get(i)] = p.id;
 			}
-			
+
 			// head
 			field[p.segmentsX.get(0)][p.segmentsY.get(0)] = -p.id;
-			
 		}
-		
 	}
 	
 	private void playerToSolids(Player p) {

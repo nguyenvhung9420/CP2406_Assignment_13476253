@@ -13,6 +13,7 @@ public class Player {
     public int steps = 1;
     public int step = 0;
     public String color;
+    public boolean jetWallOn = false;
 
     public ArrayList<Integer> segmentsX = new ArrayList<>();
     public ArrayList<Integer> segmentsY = new ArrayList<>();
@@ -22,6 +23,7 @@ public class Player {
 
         this.id = id;
         this.color = color;
+        this.jetWallOn = jetWallOn;
 
         Random rand = new Random();
 
