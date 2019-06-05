@@ -251,11 +251,11 @@ public class ServerHandler implements ActionListener {
 		 * 
 		 */
 		
-		if (content.startsWith("getID")) {
+		if (content.startsWith("ADD_USER")) {
 			
 			// begin with 2 ( -> 0 nothing 1 fruit -1 border)
 			
-			Player newPlayer = new Player(game.players.size() + 2, content.substring(6));
+			Player newPlayer = new Player(game.players.size() + 2, content.substring(9));
 			game.players.add(newPlayer);
 			respond("setID;" + newPlayer.id, connection);
 			clients.put(connection.getID(), newPlayer.id);
@@ -269,10 +269,10 @@ public class ServerHandler implements ActionListener {
 			
 		} else if (content.startsWith("direction")) {
 			
-			String temp[] = content.split(";");
+			String temp[] = content.split("_");
 			Player player = game.players.get(Integer.valueOf(temp[1]) - 2);
 			if (player == null) return;
-			player.direction = Integer.valueOf(temp[2]);
+			player.direction = Integer.valueOf(temp[3]);
 			
 		} else if (content.startsWith("getHighscore")) {
 			

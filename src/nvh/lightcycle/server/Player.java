@@ -75,6 +75,10 @@ public class Player {
             case 3:
                 segmentsY.set(0, segmentsY.get(0) + 1);
                 break;
+            // ADD JETWALL:
+            case 4:
+                this.jetWallOn = true;
+                //break;
         }
 
         // add segment
@@ -82,8 +86,6 @@ public class Player {
             segmentsX.add(lastX);
             segmentsY.add(lastY);
         }
-
-        // System.out.println(segmentsX + " " + segmentsY);
 
     }
 

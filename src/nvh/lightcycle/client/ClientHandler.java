@@ -181,6 +181,7 @@ public class ClientHandler implements KeyListener {
 				lightcycleClient.board.id = 9999;
 				lightcycleClient.board.repaint();
 				ingame = false;
+				System.out.println("GAME OVER");
 			}
 			
 		} else if (content.startsWith("ban")) {
@@ -223,16 +224,30 @@ public class ClientHandler implements KeyListener {
 			
 		} else if (key == KeyEvent.VK_DOWN || key == KeyEvent.VK_S) {
 			direction = 3;
-			
+
+		} else if (key == KeyEvent.VK_ENTER ) {
+			direction = 4;
+
 		} else if (key == KeyEvent.VK_SPACE && !ingame) {
 			
 			// wanna play
-			request("getID;#" + Integer.toHexString(lightcycleClient.board.myColor.getRGB()).substring(2));
+			request("ADD_USER;#" + Integer.toHexString(lightcycleClient.board.myColor.getRGB()).substring(2));
 			
 		}
 		
 		if (direction != -1 && ingame) {
-			request("direction;" + String.valueOf(id) + ";" + String.valueOf(direction));
+			request("direction:USER_" + String.valueOf(id) + "_TURNS_" + String.valueOf(direction));
+			if (direction == 0){
+				System.out.println("USER " + id + " TURNS RIGHT");
+			}else if (direction == 1){
+				System.out.println("USER " + id + " GOES UP");
+			} else if (direction == 2){
+				System.out.println("USER " + id + " TURNS LEFT");
+			} else if (direction == 3){
+				System.out.println("USER " + id + " GOES DOWN");
+			} else if (direction == 4){
+				System.out.println("USER " + id + " TURNS NOTHING");
+			}
 		}
 		
 	}
