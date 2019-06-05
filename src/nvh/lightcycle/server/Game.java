@@ -66,6 +66,9 @@ public class Game {
 			int pX = p.segmentsX.get(0);
 			int pY = p.segmentsY.get(0);
 
+			int qX;
+			int qY;
+
 			boolean pX_equal_qX = false;
 			boolean pY_equal_qY = false;
 
@@ -73,6 +76,9 @@ public class Game {
 
 			// set q to be the each other player other than p:
 			for (Player q : players) {
+				qX = q.segmentsX.get(0);
+				qY = q.segmentsY.get(0);
+
 				if (q == null) continue;
 				// Check if the player hits ifself:
 				if (p == q) {
@@ -91,6 +97,14 @@ public class Game {
 				// in case player p hits another:
 				}
 				else if (q.segmentsX.contains(pX) && q.segmentsY.contains(pY)) {
+					if (qX == pX && qY == pY){
+						if (deadPlayersBecomeSolids) {
+							playerToSolids(p);
+							playerToSolids(q);
+						}
+						players.set(i, null);
+						continue outerLoop;
+					}
 					length_of_q = q.segmentsX.size();
 					for (int d = 1; d < length_of_q; d++) {
 						pX_equal_qX = false;

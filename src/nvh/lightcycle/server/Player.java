@@ -13,7 +13,7 @@ public class Player {
     public int steps = 1;
     public int step = 0;
     public String color;
-    public boolean jetWallOn = false;
+    public boolean jetWallOn;
 
     public ArrayList<Integer> segmentsX = new ArrayList<>();
     public ArrayList<Integer> segmentsY = new ArrayList<>();
@@ -23,7 +23,7 @@ public class Player {
 
         this.id = id;
         this.color = color;
-        this.jetWallOn = jetWallOn;
+        this.jetWallOn = true;
 
         Random rand = new Random();
 
@@ -78,7 +78,7 @@ public class Player {
         }
 
         // add segment
-        if (true){
+        if (this.jetWallOn){
             segmentsX.add(lastX);
             segmentsY.add(lastY);
         }
