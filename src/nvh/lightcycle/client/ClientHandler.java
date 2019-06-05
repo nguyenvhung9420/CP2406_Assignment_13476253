@@ -130,7 +130,7 @@ public class ClientHandler implements KeyListener {
 			id = Integer.valueOf(content.substring(6));
 			lightcycleClient.board.id = id;
 			score = 0;
-			lightcycleClient.board.text = "Score: " + score + " | Highscore: " + highscore;
+			lightcycleClient.board.text = "Score: " + score ;
 			ingame = true;
 			
 		} else if (content.startsWith("update")) {
@@ -159,7 +159,7 @@ public class ClientHandler implements KeyListener {
 			String temp[] = content.split(";");
 			if (Integer.valueOf(temp[1]) == id) {
 				score = Integer.valueOf(temp[2]);
-				lightcycleClient.board.text = "Score: " + score + " | Highscore: " + highscore;
+				lightcycleClient.board.text = "Your score: " + score + " | Highscore: " + highscore;
 				lightcycleClient.board.repaint();
 			}
 			
@@ -167,9 +167,11 @@ public class ClientHandler implements KeyListener {
 			
 			highscore = Integer.valueOf(content.substring(10));
 			if (ingame) {
-				lightcycleClient.board.text = "Score: " + score + " | Highscore: " + highscore;
+				lightcycleClient.board.text = "Your score: " + score + " | Highscore: " + highscore;
+				//lightcycleClient.board.text = "Score: " + score;
 			} else {
-				lightcycleClient.board.text = "Press SPACE to play. | Highscore: " + highscore;
+				lightcycleClient.board.text = "Press SPACE to play.";
+				System.out.println("Status: PLAYING");
 			}
 			lightcycleClient.board.repaint();
 			
@@ -177,11 +179,11 @@ public class ClientHandler implements KeyListener {
 			
 			String temp[] = content.split(";");
 			if (Integer.valueOf(temp[1]) == id) {
-				lightcycleClient.board.text = "GAME OVER! Press SPACE to replay. | Highscore: " + highscore;
+				lightcycleClient.board.text = "GAME OVER! Press SPACE to replay. | Your final score: " + score+ " | Highscore: " + highscore;
 				lightcycleClient.board.id = 9999;
 				lightcycleClient.board.repaint();
 				ingame = false;
-				System.out.println("GAME OVER");
+				System.out.println("Status: GAME OVER");
 			}
 			
 		} else if (content.startsWith("ban")) {
@@ -225,7 +227,7 @@ public class ClientHandler implements KeyListener {
 		} else if (key == KeyEvent.VK_DOWN || key == KeyEvent.VK_S) {
 			direction = 3;
 
-		} else if (key == KeyEvent.VK_ENTER ) {
+		} else if (key == KeyEvent.VK_C ) {
 			direction = 4;
 
 		} else if (key == KeyEvent.VK_SPACE && !ingame) {
@@ -238,15 +240,15 @@ public class ClientHandler implements KeyListener {
 		if (direction != -1 && ingame) {
 			request("direction:USER_" + String.valueOf(id) + "_TURNS_" + String.valueOf(direction));
 			if (direction == 0){
-				System.out.println("USER " + id + " TURNS RIGHT");
+				System.out.println("Response: USER " + id + " TURNS RIGHT");
 			}else if (direction == 1){
-				System.out.println("USER " + id + " GOES UP");
+				System.out.println("Response: USER " + id + " GOES UP");
 			} else if (direction == 2){
-				System.out.println("USER " + id + " TURNS LEFT");
+				System.out.println("Response: USER " + id + " TURNS LEFT");
 			} else if (direction == 3){
-				System.out.println("USER " + id + " GOES DOWN");
+				System.out.println("Response: USER " + id + " GOES DOWN");
 			} else if (direction == 4){
-				System.out.println("USER " + id + " TURNS NOTHING");
+				System.out.println("Response: USER " + id + " TURNS NOTHING");
 			}
 		}
 		

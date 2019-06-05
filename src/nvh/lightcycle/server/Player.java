@@ -23,12 +23,12 @@ public class Player {
 
         this.id = id;
         this.color = color;
-        this.jetWallOn = true;
+        jetWallOn = true;
 
         Random rand = new Random();
 
-        segmentsX.add(rand.nextInt(17));
-        segmentsY.add(rand.nextInt(17));
+        segmentsX.add(rand.nextInt(25));
+        segmentsY.add(rand.nextInt(25));
 
     }
 
@@ -77,12 +77,12 @@ public class Player {
                 break;
             // ADD JETWALL:
             case 4:
-                this.jetWallOn = true;
-                //break;
+                jetWallOn = true;
+                break;
         }
 
         // add segment
-        if (this.jetWallOn){
+        if (true){
             segmentsX.add(lastX);
             segmentsY.add(lastY);
         }

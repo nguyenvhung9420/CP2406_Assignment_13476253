@@ -6,8 +6,8 @@ import java.util.Random;
 
 public class Game {
 
-    public static final int WIDTH = 32;
-    public static final int HEIGHT = 18;
+    public static final int WIDTH = 50;
+    public static final int HEIGHT = 30;
     public static final int TICK = 1000; //The speed of the light cycle
 
     public int field[][] = new int[WIDTH][HEIGHT];
@@ -36,10 +36,27 @@ public class Game {
         for (Player p : players) {
             if (p == null) continue;
             p.move();
+            p.score++;
+            p.updateScore = true;
         }
     }
 
     private void checkCollisions() {
+
+        boucle_exterieure:
+        for (int i = 0; i < players.size(); i++) {
+            Player p = players.get(i);
+            if ( p != null){
+                for (int j =0; j<players.size(); j++) {
+                    Player q = players.get(j);
+                    if (q != null && p.segmentsX.get(0) == q.segmentsX.get(0) && p.segmentsY.get(0) == q.segmentsY.get(0)){
+                        System.out.println("Prepare to delete");
+                        //players.set(i, null);
+                        //players.set(j, null);
+                        continue boucle_exterieure;
+                    }
+                }
+        }}
 
         outerLoop:
         for (int i = 0; i < players.size(); i++) {
@@ -75,15 +92,16 @@ public class Game {
             int length_of_q = 0;
 
             // set q to be the each other player other than p:
+            int j = 0;
             for (Player q : players) {
 
                 if (q == null) {
-                    continue;
+                    continue outerLoop;
                 } else {
                     qX = q.segmentsX.get(0);
                     qY = q.segmentsY.get(0);
                 }
-                ;
+
                 // Check if the player hits ifself:
                 if (p == q) {
 
@@ -91,8 +109,6 @@ public class Game {
                         if (q.segmentsX.get(d) == pX && q.segmentsY.get(d) == pY) {
 
                             // make p dead:
-                            System.out.println("q.segmentsY.get(d) == pY = " + q.segmentsY.get(d));
-                            System.out.println("q.segmentsX.get(d) == pX = " + q.segmentsX.get(d));
                             System.out.println("checkSolids p == q to make p dead.");
                             if (deadPlayersBecomeSolids) playerToSolids(p);
                             players.set(i, null);
@@ -101,15 +117,21 @@ public class Game {
                     }
 
                     // in case player p hits another:
-                } else if (q.segmentsX.contains(pX) && q.segmentsY.contains(pY)) {
-                    if (qX == pX && qY == pY) {
-                        if (deadPlayersBecomeSolids) {
-                            playerToSolids(p);
-                            playerToSolids(q);
-                        }
-                        players.set(i, null);
-                        continue outerLoop;
+                }
+                /*else if (qX == pX && qY == pY){
+                    System.out.println("pX = " + pX);
+                    System.out.println("pY = " + pY);
+                    System.out.println("qX = " + qX);
+                    System.out.println("qY = " + qY );
+                    if (deadPlayersBecomeSolids) {
+                        //playerToSolids(p);
+                        //playerToSolids(q);
                     }
+                    //players.set(j, null);
+                    //players.set(i, null);
+                    //j++;
+                }*/
+                else if (q.segmentsX.contains(pX) && q.segmentsY.contains(pY)) {
 
                     length_of_q = q.segmentsX.size();
                     for (int d = 1; d < length_of_q; d++) {

@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.lang.*;
 
 import javax.swing.Timer;
 
@@ -272,8 +273,13 @@ public class ServerHandler implements ActionListener {
 			String temp[] = content.split("_");
 			Player player = game.players.get(Integer.valueOf(temp[1]) - 2);
 			if (player == null) return;
-			player.direction = Integer.valueOf(temp[3]);
-			
+
+			if (Math.abs((player.direction - Integer.valueOf(temp[3]))) != 2
+				&& Math.abs((player.direction - Integer.valueOf(temp[3]))) != 0){
+					player.direction = Integer.valueOf(temp[3]);
+					player.score++;
+			}
+
 		} else if (content.startsWith("getHighscore")) {
 			
 			respond("highscore;" + game.highscore, connection);
