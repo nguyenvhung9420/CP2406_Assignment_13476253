@@ -36,7 +36,7 @@ public class LightcycleClient extends JFrame {
 				handler.stop();
 			}
 		});
-		setTitle("Light Cycle Multiplayer");
+		setTitle("Light Cycle Player");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);

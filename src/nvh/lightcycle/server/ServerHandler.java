@@ -110,21 +110,17 @@ public class ServerHandler implements ActionListener {
 	}
 	
 	public void handleCommand(String command) {
-		
-		/** --- COMMANDS ---
-		 * 
+
+		/* --- COMMANDS ---
+		 * These commands are used only for the server, not client:
+		 *
 		 * freeze;[id]
 		 * slowdown;[id];[steps]
-		 * kamikaze;[id]
 		 * ban;[ip]
-		 * unban;[ip]
 		 * score;[id];[score]
 		 * speed;[tick]
 		 * gamemode;[mode]	0 normal	1 deadPlayersBecomeSolids
-		 * addsolid;[x];[y]
-		 * remsolid;[x];[y]
-		 * clearsolids
-		 * 
+		 *
 		 */
 		
 		System.out.println("Command: " + command);
@@ -144,13 +140,6 @@ public class ServerHandler implements ActionListener {
 			player.steps = Integer.valueOf(temp[2]);
 			log("Slowed player " + player.id + " down to " + player.steps + " steps");
 			
-		} else if (command.startsWith("kamikaze")) {
-			
-			Player player = game.players.get(Integer.valueOf(command.substring(9)) - 2);
-			if (player == null) return;
-			player.kamikaze = player.direction;
-			log("Locked direction of player " + player.id);
-			
 		} else if (command.startsWith("ban")) {
 			
 			String ip = command.substring(4);
@@ -162,12 +151,6 @@ public class ServerHandler implements ActionListener {
 				}
 			}
 			log("Banned IP " + ip);
-			
-		} else if (command.startsWith("unban")) {
-			
-			String ip = command.substring(6);
-			if (banList.contains(ip)) banList.remove(ip);
-			log("Unbanned IP " + ip);
 			
 		} else if (command.startsWith("score")) {
 
@@ -200,30 +183,6 @@ public class ServerHandler implements ActionListener {
 			}
 			log("Switched gamemode to " + mode);
 			
-		} else if (command.startsWith("addsolid")) {
-
-			String temp[] = command.split(";");
-			game.solidsX.add(Integer.valueOf(temp[1]));
-			game.solidsY.add(Integer.valueOf(temp[2]));
-			log("Added solid at X:" + temp[1] + " Y:" + temp[2]);
-			
-		} else if (command.startsWith("remsolid")) {
-
-			String temp[] = command.split(";");
-			for (int i = 0; i < game.solidsX.size(); i++) {
-				if (game.solidsX.get(i) == Integer.valueOf(temp[1]) && game.solidsY.get(i) == Integer.valueOf(temp[2])) {
-					game.solidsX.remove(i);
-					game.solidsY.remove(i);
-					log("Removed solid at X:" + temp[1] + " Y:" + temp[2]);
-				}
-			}
-			
-		} else if (command.startsWith("clearsolids")) {
-			
-			game.solidsX.clear();
-			game.solidsY.clear();
-			log("Removed all solids");
-			
 		}
 		
 	}
@@ -232,32 +191,11 @@ public class ServerHandler implements ActionListener {
 		
 		System.out.println("Request: " + content);
 		
-		/** --- COMMANDS ---
-		 * 
-		 * getID;[color]
-		 * setID;[id]
-		 * 
-		 * direction;[id];[direction]
-		 * 
-		 * update;[field]
-		 * score;[id];[score]
-		 * dead;[id]
-		 * highscore;[highscore]
-		 * colors;[id]:[color];[id2]...
-		 * 
-		 * getHighscore
-		 * getColors
-		 * 
-		 * dead;[id]
-		 * 
-		 */
-		
 		if (content.startsWith("ADD_USER")) {
-			
-			// begin with 2 ( -> 0 nothing 1 fruit -1 border)
 			
 			Player newPlayer = new Player(game.players.size() + 2, content.substring(9));
 			game.players.add(newPlayer);
+			game.update();
 			respond("setID;" + newPlayer.id, connection);
 			clients.put(connection.getID(), newPlayer.id);
 			
@@ -350,6 +288,7 @@ public class ServerHandler implements ActionListener {
 				}
 				
 			} else if (p == null && !deadIds.contains(i + 2)) {
+				System.out.println("This one is happening");
 				deadIds.add(i + 2);
 				response = new Response();
 				response.content = "dead;" + (i + 2);

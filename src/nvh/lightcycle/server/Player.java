@@ -27,8 +27,8 @@ public class Player {
 
         Random rand = new Random();
 
-        segmentsX.add(rand.nextInt(25));
-        segmentsY.add(rand.nextInt(25));
+        segmentsX.add(rand.nextInt(15));
+        segmentsY.add(rand.nextInt(15));
 
     }
 
@@ -74,10 +74,6 @@ public class Player {
             // DOWN
             case 3:
                 segmentsY.set(0, segmentsY.get(0) + 1);
-                break;
-            // ADD JETWALL:
-            case 4:
-                jetWallOn = true;
                 break;
         }
 

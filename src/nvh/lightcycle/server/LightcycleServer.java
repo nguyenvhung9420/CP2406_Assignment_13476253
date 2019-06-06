@@ -41,7 +41,7 @@ public class LightcycleServer extends JFrame {
 	}
 
 	/**
-	 * Create the frame.
+	 * create the frame.
 	 */
 	public LightcycleServer() {
 		setTitle("Player");
@@ -51,10 +51,12 @@ public class LightcycleServer extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
-		
+
+		// create and add the panel:
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.NORTH);
-		
+
+		// Start button:
 		buttonStart = new JButton("Start");
 		buttonStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -63,7 +65,8 @@ public class LightcycleServer extends JFrame {
 			}
 		});
 		panel.add(buttonStart);
-		
+
+		// Stop button:
 		buttonStop = new JButton("Stop");
 		buttonStop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

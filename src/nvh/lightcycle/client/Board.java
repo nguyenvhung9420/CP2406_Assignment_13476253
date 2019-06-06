@@ -9,13 +9,17 @@ import java.util.Random;
 
 import javax.swing.JPanel;
 
+import java.awt.event.*;
+import java.awt.*;
+import javax.swing.*;
+
 import nvh.lightcycle.server.Game;
 
 public class Board extends JPanel {
 	
 	private static final long serialVersionUID = 1L;
 	
-	public static final int DOTS = 20;
+	public static final int DOTS = 20; // the size of lightcycle
 	public static final Color BGCOLOR = Color.decode("#424242");
 	public static final Color SOLIDCOLOR = Color.decode("#FFFFFF");
 
@@ -32,13 +36,17 @@ public class Board extends JPanel {
 		setPreferredSize(new Dimension(Game.WIDTH*DOTS, Game.HEIGHT*DOTS));
 		
 		// generate colors for elements on the game:
-		//TODO: Change everything below to color chooser in Java:
 		Random rnd = new Random();
 		float hue = rnd.nextFloat();
 		float sat = (rnd.nextInt(4000) + 3000) / 10000f;
 		float lum = .7f;
-		myColor = Color.getHSBColor(hue, sat, lum);
-		
+
+		// generate a random initial color first:
+		Color initialcolor = Color.getHSBColor(hue, sat, lum);
+
+		// show the color chooser board:
+		Color color = JColorChooser.showDialog(this,"Select a color", initialcolor);
+		myColor = color;
 	}
 
 

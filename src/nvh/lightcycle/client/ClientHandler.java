@@ -43,8 +43,7 @@ public class ClientHandler implements KeyListener {
 			kryo.register(Request.class);
 			kryo.register(Response.class);
 
-			//In case want to input manually the IP host:
-			//InetAddress address = client.discoverHost(54001, 5000);
+			// input manually the IP host:
 			InetAddress address = InetAddress.getByName(JOptionPane.showInputDialog("Enter server IP"));
 			
 			client.connect(5000, address, 54000, 54001);
@@ -123,8 +122,7 @@ public class ClientHandler implements KeyListener {
 	private void handleResponse(String content, Connection connection) {
 
 		if (!content.startsWith("update")) System.out.println("Response: " + content);
-		
-		
+
 		if (content.startsWith("setID")) {
 			
 			id = Integer.valueOf(content.substring(6));
@@ -213,8 +211,10 @@ public class ClientHandler implements KeyListener {
 	public void keyPressed(KeyEvent e) {
 		
 		int key = e.getKeyCode();
-		int direction = -1;
-		
+		int direction = -1; // the default direction is -1
+
+		// list of keys which will be pressed during the game:
+		// 1. keys to make movement:
 		if (key == KeyEvent.VK_RIGHT || key == KeyEvent.VK_D) {
 			direction = 0;
 			
@@ -227,9 +227,7 @@ public class ClientHandler implements KeyListener {
 		} else if (key == KeyEvent.VK_DOWN || key == KeyEvent.VK_S) {
 			direction = 3;
 
-		} else if (key == KeyEvent.VK_C ) {
-			direction = 4;
-
+			// 2. keys to start game:
 		} else if (key == KeyEvent.VK_SPACE && !ingame) {
 			
 			// wanna play
@@ -245,10 +243,8 @@ public class ClientHandler implements KeyListener {
 				System.out.println("Response: USER " + id + " GOES UP");
 			} else if (direction == 2){
 				System.out.println("Response: USER " + id + " TURNS LEFT");
-			} else if (direction == 3){
+			} else {
 				System.out.println("Response: USER " + id + " GOES DOWN");
-			} else if (direction == 4){
-				System.out.println("Response: USER " + id + " TURNS NOTHING");
 			}
 		}
 		

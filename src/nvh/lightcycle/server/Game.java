@@ -6,8 +6,8 @@ import java.util.Random;
 
 public class Game {
 
-    public static final int WIDTH = 50;
-    public static final int HEIGHT = 30;
+    public static final int WIDTH = 35;
+    public static final int HEIGHT = 20;
     public static final int TICK = 1000; //The speed of the light cycle
 
     public int field[][] = new int[WIDTH][HEIGHT];
@@ -18,14 +18,13 @@ public class Game {
     public ArrayList<Integer> solidsY = new ArrayList<>();
 
     public int highscore = 0;
-    public boolean deadPlayersBecomeSolids = false;
+    public boolean deadPlayersBecomeSolids = false; // the dead player can be still shown in the game by this option
 
 
     public Game() {
     }
 
     public void update() {
-
         move();
         checkCollisions();
         checkSolids();
@@ -42,21 +41,6 @@ public class Game {
     }
 
     private void checkCollisions() {
-
-        boucle_exterieure:
-        for (int i = 0; i < players.size(); i++) {
-            Player p = players.get(i);
-            if ( p != null){
-                for (int j =0; j<players.size(); j++) {
-                    Player q = players.get(j);
-                    if (q != null && p.segmentsX.get(0) == q.segmentsX.get(0) && p.segmentsY.get(0) == q.segmentsY.get(0)){
-                        System.out.println("Prepare to delete");
-                        //players.set(i, null);
-                        //players.set(j, null);
-                        continue boucle_exterieure;
-                    }
-                }
-        }}
 
         outerLoop:
         for (int i = 0; i < players.size(); i++) {
@@ -96,20 +80,18 @@ public class Game {
             for (Player q : players) {
 
                 if (q == null) {
-                    continue outerLoop;
+                    continue ;
                 } else {
                     qX = q.segmentsX.get(0);
                     qY = q.segmentsY.get(0);
                 }
 
-                // Check if the player hits ifself:
+                // check if the player hits ifself:
                 if (p == q) {
-
                     for (int d = 1; d < q.segmentsX.size(); d++) {
                         if (q.segmentsX.get(d) == pX && q.segmentsY.get(d) == pY) {
 
                             // make p dead:
-                            System.out.println("checkSolids p == q to make p dead.");
                             if (deadPlayersBecomeSolids) playerToSolids(p);
                             players.set(i, null);
                             continue outerLoop;
@@ -118,21 +100,7 @@ public class Game {
 
                     // in case player p hits another:
                 }
-                /*else if (qX == pX && qY == pY){
-                    System.out.println("pX = " + pX);
-                    System.out.println("pY = " + pY);
-                    System.out.println("qX = " + qX);
-                    System.out.println("qY = " + qY );
-                    if (deadPlayersBecomeSolids) {
-                        //playerToSolids(p);
-                        //playerToSolids(q);
-                    }
-                    //players.set(j, null);
-                    //players.set(i, null);
-                    //j++;
-                }*/
                 else if (q.segmentsX.contains(pX) && q.segmentsY.contains(pY)) {
-
                     length_of_q = q.segmentsX.size();
                     for (int d = 1; d < length_of_q; d++) {
                         pX_equal_qX = false;
@@ -144,9 +112,6 @@ public class Game {
                             pY_equal_qY = true;
                         }
                         if (pX_equal_qX && pY_equal_qY) {
-                            System.out.println("q.segmentsY.get(d) == pY = " + q.segmentsY.get(d));
-                            System.out.println("q.segmentsX.get(d) == pX = " + q.segmentsX.get(d));
-                            System.out.println("checkSolids p != q to make p dead.");
                             if (deadPlayersBecomeSolids) playerToSolids(p);
                             players.set(i, null);
                             continue outerLoop;
@@ -176,7 +141,6 @@ public class Game {
                 } else {
 
                     // make p dead:
-                    System.out.println("checkSolids to make p dead.");
                     if (deadPlayersBecomeSolids) playerToSolids(p);
                     players.set(i, null);
                     continue outerLoop;
